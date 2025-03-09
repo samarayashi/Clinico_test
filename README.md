@@ -50,6 +50,16 @@ npm run dev
 npm start
 ```
 
+## 部署資訊
+
+專案已部署於：[https://policyholders-api-amd64.onrender.com/api-docs](https://policyholders-api-amd64.onrender.com/api-docs)
+
+### 部署架構
+
+- **容器化**：使用Docker Hub的映像檔
+- **資料庫**：使用Render.io提供的PostgreSQL資料庫服務
+- **持續部署**：已設置Webhook，當標記為`amd64`的映像檔被推送至Docker Hub時，會自動觸發部署流程
+
 ## API文件
 
 ### 保戶查詢
@@ -90,6 +100,38 @@ CREATE TABLE policyholders (
 );
 ```
 
+### 其他考慮的表格設計方案
+
+#### Closure Table（閉包表模型）
+
+這種方式使用一張額外的表來存儲所有節點與祖先的關係，不再需要遞迴的通用表達式（RCTE）。
+
+```sql
+CREATE TABLE policyholders (
+    code VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    registration_date TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE policyholder_closure (
+    ancestor VARCHAR(10) NOT NULL,
+    descendant VARCHAR(10) NOT NULL,
+    depth INT NOT NULL,
+    PRIMARY KEY (ancestor, descendant),
+    FOREIGN KEY (ancestor) REFERENCES policyholders(code),
+    FOREIGN KEY (descendant) REFERENCES policyholders(code)
+);
+```
+
+**優勢**：
+- 查詢所有後代或祖先非常快速，因為它是一張獨立的關聯表
+- 支持高效的樹結構遍歷和查詢
+
+**劣勢**：
+- 插入時需要額外插入多條記錄（例如新增一個保戶時，需要插入與所有祖先的關聯）
+- 儲存較為冗長，需要額外的空間來存儲關係
+- 維護成本較高，尤其是當節點移動或結構變化時
+
 ## 技術選型
 
 - **後端**: Node.js, Express.js
@@ -97,7 +139,7 @@ CREATE TABLE policyholders (
 - **ORM**: Sequelize
 - **容器化**: Docker, Docker Compose
 - **安全性**: Helmet
-- **日誌**: Morgan
+- **日誌**: Morgan, winston
 - **參數驗證**: express-validator
 
 ## 專案結構
@@ -117,11 +159,16 @@ CREATE TABLE policyholders (
 │   ├── models/             # 資料模型
 │   ├── routes/             # 路由定義
 │   ├── services/           # 業務邏輯
+│   ├── swagger/            # Swagger 規範
 │   ├── utils/              # 工具函數
+│   |      ├── bootstrap/   # 啟動預載
+│   |      ├── logger.js    # 日誌
+│   |      ├── swagger.js   # Swagger 配置
 │   └── validations/        # 參數驗證
 ├── .env                    # 環境變數
 ├── .env.example            # 環境變數範例
 ├── docker-compose.yml      # Docker 配置
+├── Dockerfile              # Docker 配置
 ├── package.json            # 專案配置
 ├── README.md               # 專案說明
 └── server.js               # 應用入口
