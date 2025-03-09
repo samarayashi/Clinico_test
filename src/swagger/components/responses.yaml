@@ -1,0 +1,34 @@
+NotFound:
+  description: '找不到資源'
+  content:
+    application/json:
+      schema:
+        $ref: '#/schemas/Error'
+      example:
+        success: false
+        message: '找不到請求的資源'
+        errorCode: 'RESOURCE_NOT_FOUND'
+
+ValidationError:
+  description: '輸入驗證失敗'
+  content:
+    application/json:
+      schema:
+        $ref: '#/schemas/ValidationErrorResponse'
+      example:
+        success: false
+        message: '輸入驗證失敗'
+        errors:
+          - message: '保戶編號格式不正確'
+            field: 'code'
+
+InternalServerError:
+  description: '伺服器內部錯誤'
+  content:
+    application/json:
+      schema:
+        $ref: '#/schemas/Error'
+      example:
+        success: false
+        message: '伺服器內部錯誤'
+        errorCode: 'INTERNAL_SERVER_ERROR' 

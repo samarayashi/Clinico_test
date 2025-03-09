@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: 保戶介紹關係系統 API
+  version: 1.0.0
+  description: 用於查詢保戶資料及其介紹關係的 API
+  contact:
+    name: 系統管理員
+    email: admin@example.com
+
+servers:
+  - url: /api
+    description: API 伺服器
+
+tags:
+  - name: 保戶
+    description: 保戶資料及介紹關係相關 API
+
+paths:
+  $ref: './paths/policyholders.yaml'
+
+components:
+  $ref: './components/index.yaml' 

@@ -1,0 +1,83 @@
+Policyholder:
+  type: object
+  properties:
+    code:
+      type: string
+      description: '保戶編號，格式為 P 開頭加上三位數字'
+      example: 'P001'
+    name:
+      type: string
+      description: '保戶姓名'
+      example: '張三'
+    registration_date:
+      type: string
+      format: date
+      description: '註冊日期'
+      example: '2023-01-01'
+    introducer_code:
+      type: string
+      description: '介紹人編號'
+      example: 'P002'
+
+Error:
+  type: object
+  properties:
+    success:
+      type: boolean
+      example: false
+    message:
+      type: string
+      example: '錯誤訊息'
+    errorCode:
+      type: string
+      example: 'ERROR_CODE'
+
+ValidationErrorDetail:
+  type: object
+  properties:
+    message:
+      type: string
+      example: '保戶編號格式不正確'
+    field:
+      type: string
+      example: 'code'
+
+ValidationErrorResponse:
+  type: object
+  properties:
+    success:
+      type: boolean
+      example: false
+    message:
+      type: string
+      example: '輸入驗證失敗'
+    errors:
+      type: array
+      items:
+        $ref: '#/components/schemas/ValidationErrorDetail'
+
+PolicyholderResponse:
+  type: object
+  properties:
+    success:
+      type: boolean
+      example: true
+    data:
+      type: object
+      properties:
+        code:
+          type: string
+          example: 'P001'
+        name:
+          type: string
+          example: '張三'
+        registration_date:
+          type: string
+          format: date
+          example: '2023-01-01'
+        introducer_code:
+          type: string
+          example: 'P002'
+        tree:
+          type: object
+          description: '保戶的介紹關係樹' 

@@ -1,0 +1,65 @@
+/policyholders:
+  get:
+    summary: 搜尋保戶
+    description: 根據查詢參數搜尋保戶資料
+    tags:
+      - 保戶
+    parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+        description: 保戶編號，格式為 P 開頭加上三位數字
+        example: P001
+    responses:
+      '200':
+        description: 成功獲取保戶資料
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyholderResponse'
+      '400':
+        $ref: '#/components/responses/ValidationError'
+      '404':
+        $ref: '#/components/responses/NotFound'
+      '500':
+        $ref: '#/components/responses/InternalServerError'
+
+/policyholders/{code}/top:
+  get:
+    summary: 查詢保戶上層關係
+    description: 根據保戶編號查詢其上層介紹人的關係樹
+    tags:
+      - 保戶
+    parameters:
+      - in: path
+        name: code
+        required: true
+        schema:
+          type: string
+        description: 保戶編號，格式為 P 開頭加上三位數字
+        example: P001
+    responses:
+      '200':
+        description: 成功獲取保戶上層關係
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyholderResponse'
+            example:
+              success: true
+              data:
+                code: 'P002'
+                name: '李四'
+                registration_date: '2023-01-01'
+                introducer_code: 'P003'
+                tree:
+                  # 樹狀結構示例
+                  l: []
+                  r: []
+      '400':
+        $ref: '#/components/responses/ValidationError'
+      '404':
+        $ref: '#/components/responses/NotFound'
+      '500':
+        $ref: '#/components/responses/InternalServerError'

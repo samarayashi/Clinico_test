@@ -1,0 +1,24 @@
+# 依賴包
+node_modules/
+# 環境變數
+.env
+# 日誌文件
+logs
+*.log
+npm-debug.log*
+# 作業系統文件
+.DS_Store
+Thumbs.db
+# 編輯器目錄和文件
+.idea/
+.vscode/
+*.swp
+*.swo
+# 打包文件
+dist/
+build/
+# 其他
+coverage/
+.nyc_output/
+.cache/
+.tmp/ 
