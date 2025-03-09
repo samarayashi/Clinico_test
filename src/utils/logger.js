@@ -21,7 +21,6 @@ const logFormat = winston.format.combine(
 const logger = winston.createLogger({
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   format: logFormat,
-  defaultMeta: { service: 'policyholder-api' },
   transports: [
     // 寫入所有日誌到 combined.log
     new winston.transports.File({ 

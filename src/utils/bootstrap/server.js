@@ -1,5 +1,7 @@
 const { initializeDatabase } = require('./database');
 
+const isProduction = process.env.NODE_ENV === 'production';
+const DOMAIN = isProduction ? 'https://policyholders-api-amd64.onrender.com/api' : `http://localhost:${process.env.PORT}`
 /**
  * 啟動 HTTP 伺服器
  * @param {express.Application} app - Express 應用實例
@@ -10,7 +12,7 @@ const startHttpServer = (app, port) => {
   return new Promise((resolve, reject) => {
     try {
       const server = app.listen(port, () => {
-        console.log(`伺服器運行於 http://${app.get('host')}:${port}`);
+        console.log(`伺服器運行於 ${DOMAIN}`);
         resolve(server);
       });
     } catch (error) {

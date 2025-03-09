@@ -3,7 +3,7 @@ NotFound:
   content:
     application/json:
       schema:
-        $ref: '#/schemas/Error'
+        $ref: '#/components/schemas/Error'
       example:
         success: false
         message: '找不到請求的資源'
@@ -14,7 +14,7 @@ ValidationError:
   content:
     application/json:
       schema:
-        $ref: '#/schemas/ValidationErrorResponse'
+        $ref: '#/components/schemas/ValidationErrorResponse'
       example:
         success: false
         message: '輸入驗證失敗'
@@ -27,7 +27,7 @@ InternalServerError:
   content:
     application/json:
       schema:
-        $ref: '#/schemas/Error'
+        $ref: '#/components/schemas/Error'
       example:
         success: false
         message: '伺服器內部錯誤'
