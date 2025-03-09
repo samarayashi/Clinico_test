@@ -10,7 +10,7 @@ const startHttpServer = (app, port) => {
   return new Promise((resolve, reject) => {
     try {
       const server = app.listen(port, () => {
-        console.log(`伺服器運行於 http://localhost:${port}`);
+        console.log(`伺服器運行於 http://${app.get('host')}:${port}`);
         resolve(server);
       });
     } catch (error) {

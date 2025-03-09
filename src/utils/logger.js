@@ -68,7 +68,7 @@ const logger = winston.createLogger({
 
 // 在生產環境中，可能不需要控制台輸出
 if (process.env.NODE_ENV === 'production') {
-  logger.transports.find(t => t instanceof winston.transports.Console).level = 'error';
+  logger.transports.find(t => t instanceof winston.transports.Console).level = 'info';
 }
 
 // 為了方便使用，添加一些常用的日誌方法

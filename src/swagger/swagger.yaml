@@ -10,6 +10,8 @@ info:
 servers:
   - url: /api
     description: API 伺服器
+  - url: https://policyholders-api-amd64.onrender.com/api
+    description: render 伺服器
 
 tags:
   - name: 保戶
