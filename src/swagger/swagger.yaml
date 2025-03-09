@@ -9,9 +9,9 @@ info:
 
 servers:
   - url: /api
-    description: API 伺服器
+    description: 本地開發環境
   - url: https://policyholders-api-amd64.onrender.com/api
-    description: render 伺服器
+    description: 線上生產環境
 
 tags:
   - name: 保戶
