@@ -1,11 +1,7 @@
-version: '3.8'
-
 services:
   # 應用服務
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: samarayashi/policyholders-api:latest
     container_name: policyholders_api
     restart: always
     ports:
